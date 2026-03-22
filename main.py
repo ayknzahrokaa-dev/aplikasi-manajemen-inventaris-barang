@@ -1,7 +1,8 @@
 from barang import BarangElektronik, BarangMakanan, BarangPakaian
 from inventaris import Inventaris
-from transaksi import BarangMasuk, BarangKeluar
+from transaksi import BarangMasuk, BarangKeluar, DetailTransaksi
 from user import Admin, Staff
+from laporan import Laporan
 
 def main():
     print("=== SISTEM MANAJEMEN INVENTARIS ===")
@@ -31,15 +32,21 @@ def main():
 
         print("\n=== DISKON ===")
         harga_diskon = b1.hitung_diskon(b1.get_harga(), 10)
-        print(f"Harga Laptop setelah diskon 10%: {harga_diskon}")
+        print(f"Harga Laptop setelah diskon 15%: {harga_diskon}")
+        harga_diskon = b1.hitung_diskon(b3.get_harga(), 10)
+        print(f"Harga kaos setelah diskon 10%: {harga_diskon}")
 
         print("\n=== TRANSAKSI ===")
 
-        t1 = BarangKeluar("T01", b1, 3)
+        t1 = BarangKeluar("E01", b1, 3)
         t1.proses()
 
         t2 = BarangMasuk("T02", b2, 5)
         t2.proses()
+
+        print("\n=== DETAIL TRANSAKSI ===")
+        detail = DetailTransaksi(b1, 2)
+        print("Subtotal:", detail.subtotal())
 
         print("\n=== SETELAH TRANSAKSI ===")
         inv.tampilkan_barang()
@@ -48,32 +55,29 @@ def main():
         b3.set_stok(25)
         print(b3.get_info())
 
-
         print("\n=== CARI BARANG ===")
         barang = inv.cari_barang("P01")
         print("Ditemukan:", barang.get_info())
-
 
         print("\n=== HAPUS BARANG ===")
         inv.hapus_barang("M01")
         inv.tampilkan_barang()
 
-
         print("\n=== TEST ERROR ===")
 
-        # stok negatif
+        # untuk stok negatif
         try:
             b1.set_stok(-5)
         except Exception as e:
             print("Error stok:", e)
 
-        # barang tidak ditemukan
+        # ini jika barang tidak ditemukan
         try:
             inv.cari_barang("X99")
         except Exception as e:
             print("Error cari:", e)
 
-        # stok tidak cukup
+        # jika stok tidak cukup
         try:
             t3 = BarangKeluar("T03", b1, 999)
             t3.proses()
@@ -82,6 +86,11 @@ def main():
 
     except Exception as e:
         print("Terjadi error utama:", e)
+
+    print("\n=== LAPORAN ===")
+    laporan = Laporan()
+    laporan.laporan_stok([b1, b2, b3])
+    laporan.laporan_nilai([b1, b2, b3])
 
 
 if __name__ == "__main__":
