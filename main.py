@@ -32,9 +32,7 @@ def main():
 
         print("\n=== DISKON ===")
         harga_diskon = b1.hitung_diskon(b1.get_harga(), 10)
-        print(f"Harga Laptop setelah diskon 15%: {harga_diskon}")
-        harga_diskon = b1.hitung_diskon(b3.get_harga(), 10)
-        print(f"Harga kaos setelah diskon 10%: {harga_diskon}")
+        print(f"Harga Laptop setelah diskon 10%: {harga_diskon}")
 
         print("\n=== TRANSAKSI ===")
 
